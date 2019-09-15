@@ -16,4 +16,4 @@ image = {
     "color":"RGB"
     }
 
-#requests.post("http://127.0.0.1:8088/test", json=image)
+requests.post("http://127.0.0.1:8088/test", json=image)
