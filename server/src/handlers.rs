@@ -12,8 +12,18 @@ pub struct Image {
 }
 
 pub fn test(image: web::Json<Image>) -> impl Responder {
-    println!("Name - {} \nWidth - {} \nHeigth - {} \nColor - {} \nBuf - {:?}", image.name, image.width, image.heigth, image.color, image.buf);
-    image::save_buffer("./images/test.jpg", &image.buf, image.heigth ,image.width, image::RGB(8)).unwrap();
+    println!("Name - {} \nWidth - {} \nHeigth - {} \nColor - {} \nBuf - {:?}",
+        image.name, 
+        image.width, 
+        image.heigth, 
+        image.color, 
+        image.buf);
+    image::save_buffer("../images/test.jpg", 
+                       &image.buf, 
+                       image.heigth,
+                       image.width, 
+                       image::RGB(8)
+                      ).unwrap();
     HttpResponse::Ok().body("OK")
 }
 

@@ -3,3 +3,5 @@
 .DS_Store
 .vscode/
 bot/cloud_venv/
+config.yml
+__pycache__/
