@@ -12,7 +12,7 @@ pub struct Image {
 }
 
 pub fn test(image: web::Json<Image>) -> impl Responder {
-    println!("Name - {} \nWidth - {} \nHeigth - {} \nColor - {} \nBuf - {:?}",
+    println!("Name - {} \nWidth - {} \nHeigth - {} \nColor - {} \nBuf - {:?}\n",
         image.name, 
         image.width, 
         image.heigth, 
@@ -28,5 +28,5 @@ pub fn test(image: web::Json<Image>) -> impl Responder {
 }
 
 pub fn index() -> impl Responder {
-    HttpResponse::Ok().body("Hello, Cloud!")
+    HttpResponse::Ok().body("Hello, Cloud!\n")
 }  
