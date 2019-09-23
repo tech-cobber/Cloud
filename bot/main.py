@@ -15,7 +15,7 @@ dp = Dispatcher(bot)
 async def test(message: types.Message):
     print(message.photo[len(message.photo)-1])
     file = await bot.get_file(message.photo[len(message.photo)-1]['file_id'])
-    url = f"https://api.telegram.org/file/bot{token}/{file.file_path}"
+    url = f"https://api.telegram.org/file/bot{token}/{file.file_path}" # Do it from rust
     response = requests.get(url)
     image = Image.open(BytesIO(response.content))
     print(image.getcolors()) # None :C
