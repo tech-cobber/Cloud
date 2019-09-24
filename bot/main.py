@@ -13,24 +13,11 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(content_types=['photo']) 
 async def test(message: types.Message):
-    print(message.photo[len(message.photo)-1])
     file = await bot.get_file(message.photo[len(message.photo)-1]['file_id'])
-    url = f"https://api.telegram.org/file/bot{token}/{file.file_path}"
-    response = requests.get(url)
-    image = Image.open(BytesIO(response.content))
-    print(image.getcolors()) # None :C
-    print(image.getbands())
-    print(len(image.getdata())) # data - array of (int,int,int) TODO 
-    image_json = {
-        "name":"test", 
-        #"buf": uint_array, 
-        "width": message.photo[len(message.photo)-1]['width'], 
-        "heigth": message.photo[len(message.photo)-1]['heigth'], 
-        "color":"RGB"
-    }
-    #r = requests.post("http://127.0.0.1:8088/test", json=image_json) 
-    #print(r.status_code)
-    await message.reply_photo(message.photo[len(message.photo)-1]['file_id'])
+    r = requests.post("http://127.0.0.1:8088/image", json={'name': 'image', 
+                                                           'path': f'{file.file_path}'
+                                                           }) 
+    await message.reply(r.status_code)
 
 
 async def shutdown(dispatcher: Dispatcher):

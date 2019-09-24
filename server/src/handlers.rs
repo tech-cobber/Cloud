@@ -1,32 +1,22 @@
-extern crate image;
+extern crate reqwest;
 use actix_web::{web, HttpResponse, Responder};
 use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct Image {
     name: String,
-    buf: Vec<u8>,
-    width: u32,
-    heigth: u32,
-    color: String,
+    path: String,
+    // ... TODO
 }
 
-pub fn test(image: web::Json<Image>) -> impl Responder {
-    println!("Name - {} \nWidth - {} \nHeigth - {} \nColor - {} \nBuf - {:?}\n",
-        image.name, 
-        image.width, 
-        image.heigth, 
-        image.color, 
-        image.buf);
-    image::save_buffer("../images/test.jpg", 
-                       &image.buf, 
-                       image.heigth,
-                       image.width, 
-                       image::RGB(8)
-                      ).unwrap();
+pub fn image(image: web::Json<Image>) -> impl Responder {
+    let token = "FROM CONFIG TODO";
+    let url = format!("https://api.telegram.org/file/bot{}/{}", token, image.path);
+    let mut resp = reqwest::get(&url).unwrap();
+    let mut buf: Vec<u8> = vec![];
+    resp.copy_to(&mut buf).unwrap();
+    let path = format!("../images/{}.jpg", image.name);
+    std::fs::write(&path, buf).unwrap();
     HttpResponse::Ok().body("OK")
 }
 
-pub fn index() -> impl Responder {
-    HttpResponse::Ok().body("Hello, Cloud!\n")
-}  
