@@ -1,6 +1,4 @@
 import requests
-from PIL import Image, ImageDraw 
-import numpy as np
 from utils import read_config
 import asyncio
 from aiogram import Bot, Dispatcher, executor, types
@@ -18,6 +16,7 @@ async def test(message: types.Message):
                                                            'path': f'{file.file_path}'
                                                            }) 
     await message.reply(r.status_code)
+
 
 
 async def shutdown(dispatcher: Dispatcher):
