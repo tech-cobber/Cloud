@@ -1,13 +1,13 @@
-import requests
 from utils import read_config
-import asyncio
 from aiogram import Bot, Dispatcher, executor, types
 from io import BytesIO
+import requests
+import asyncio
 
 config = read_config(f'../config.yml')
 token  = config['token']
-bot = Bot(token=token)
-dp = Dispatcher(bot)
+bot    = Bot(token=token)
+dp     = Dispatcher(bot)
 
 @dp.message_handler(content_types=['photo']) 
 async def test(message: types.Message):
@@ -16,8 +16,6 @@ async def test(message: types.Message):
                                                            'path': f'{file.file_path}'
                                                            }) 
     await message.reply(r.status_code)
-
-
 
 async def shutdown(dispatcher: Dispatcher):
     await dispatcher.storage.close()
